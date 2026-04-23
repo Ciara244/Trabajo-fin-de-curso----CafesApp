@@ -1,0 +1,12 @@
+@font-face {
+    font-family: Decoration;
+    src: url(./Barriecito/Barriecito-Regular.ttf);
+}
+@font-face {
+    font-family: Txt;
+    src: url(./Lexend/Lexend-VariableFont_wght.ttf);
+}
+@font-face {
+    font-family: TxtBold;
+    src: url(./Lexend/static/Lexend-Medium.ttf);
+}

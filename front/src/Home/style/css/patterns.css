@@ -1,0 +1,5 @@
+.paper {
+    background-color:  #f4e2d5;
+    background-image: linear-gradient(#f9efe772, #e4cbb879),
+    url(../../../resources/pattern/textured-stripes.png);
+}
