@@ -6,13 +6,13 @@ import { UserLogin } from "../js/UserId";
 /* RESOURCES */
 import { funnelOutline, bagHandle } from 'ionicons/icons';
 
-export default function Header({ user }) {
+export default function Header({ user, menu }) {
     const nav = useHistory();
     const { basket } = useContext(UserLogin);
 
     return (
         <div className={"cabecera"}>
-            <IonIcon icon={funnelOutline} />
+            {menu ? <IonIcon icon={funnelOutline} /> : <div id="divSpace"></div>}
             {user?.id >= 1000 &&
                 <>
                     <div className={"basket"} onClick={() => nav.push("/cart")}>

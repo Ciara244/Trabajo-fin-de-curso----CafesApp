@@ -19,13 +19,13 @@ body {
     user-select: none;
 }
 
-/* GENERAL */
+/*------------------- GENERAL -------------------*/
 
 p, label, h5 {
     color: #bb8059ee;
 }
 
-p, b, label, button, ion-tab-bar>* {
+p, b, label, button, ion-tab-bar>*, ion-item, li {
     font-size: var(--app-font-size) !important;
     font-family: 'Txt';
 }
@@ -103,14 +103,16 @@ input::placeholder {
     }
 }
 
+ion-card:not(.cardOrder){
+    min-height: 40%;
+}
 ion-card{
     width: 90%;
-    min-height: 30%;
     margin: 1rem;
 
     z-index: 0;
 }
-ion-card, .box, .cart {
+ion-card, .box, .cart, #photoProduct {
     border-radius: 1.938rem 1.938rem 1.938rem 1.938rem;
     -webkit-border-radius: 1.938rem 1.938rem 1.938rem 1.938rem;
     -moz-border-radius: 1.938rem 1.938rem 1.938rem 1.938rem;
@@ -130,8 +132,13 @@ ion-tab-bar>* {
     background-color: #a07c6f !important;
 }
 
+ion-list, ion-item{
+    --background: #ebc5ab !important;
+    background-color: #ebc5ab !important;
+    --color: #542a0edb !important;
+}
 
-/* CLASES PRINCIPALES */
+/*------------------- CLASES PRINCIPALES -------------------*/
 .inicio {
     height: 100vh;
     display: flex;
@@ -167,7 +174,17 @@ ion-tab-bar>* {
     display: flex;
     align-items: center;
     justify-content: space-between;
+
+    
 }
+.cuerpo:has(.cardProduct) + .cabecera {
+    position: fixed;
+    z-index: 100;
+}
+.cuerpo:has(.cardProduct) {
+    margin-top: 3rem;
+}
+
 .cabecera > * {
     display: flex;
     align-items: center;
@@ -179,11 +196,11 @@ ion-tab-bar>* {
     color: #f4e3dc;
 }
 .cabecera>ion-icon:hover{
-    color: #964a2c;
+    color: #e0b6a5;
     cursor: pointer;
 }
 
-.cabecera > div {
+.cabecera > div:not(#divSpace) {
     max-width: 60%;
     min-width: 55%;
     display: flex;
@@ -213,11 +230,15 @@ ion-tab-bar>* {
     flex-direction: column;
     align-items: center;
 
-    
+    overflow-y: auto;
+}
+
+.cuerpo:has(.product) .product {
+    margin: auto;
 }
 
 
-/* CLASES */
+/*-------------------------------------- CLASES --------------------------------------*/
 
 .input {
     border-bottom: solid 0.15rem #c4916f;
@@ -280,7 +301,7 @@ ion-tab-bar>* {
     align-items: flex-end;
 }
 
-/* CLASES GENERALES */
+/*------------------- CLASES GENERALES -------------------*/
 
 .line {
     display: flex;
@@ -299,7 +320,7 @@ ion-tab-bar>* {
     width: 100%;
 }
 
-/* CLASES ESPECIFICAS */
+/*------------------- CLASES ESPECIFICAS -------------------*/
 .backgroundInput {
     background-color: #efd1be;
     border-radius: 0.2rem;
@@ -440,6 +461,9 @@ ion-tab-bar>* {
 .cardOrder > * h1, .cardOrder > * h2 {
     color: #6b9696 !important;
 }
+.cardOrder {
+    height: auto !important;
+}
 .orderContainer {
     display: flex;
     flex-direction: row;
@@ -484,7 +508,56 @@ ion-tab-bar>* {
     align-items: center;
 }
 
-/* ID */
+.selectorSchool {
+    width: 100%;
+}
+.selectorSchool > * ion-list {
+    border-bottom: 0.2rem solid #6b96969e !important;
+}
+
+/*Product information*/
+
+.product {
+    width: 90%;
+    height: 68% !important;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+.product h1, .product button, .product h3 {
+    align-self: center;
+    text-align: center;
+}
+.product *:not(#exit, #price, .aquaButton) {
+    color: #6b9696 !important;
+}
+.product>ul li {
+    list-style: inside;
+}
+.allergensList {
+    width: 100%;
+}
+.allergensList>ul {
+    display: flex;
+}
+.allergensList>ul li {
+    margin-right: 1rem;
+    list-style: none;
+}
+
+.purchase {
+    width: 90%;
+    height: 20%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.purchase>button {
+    width: 60%;
+}
+
+/*------------------- ID -------------------*/
 #cafeBackground {
     border-radius: 100%;
     max-height: 40%;
@@ -499,9 +572,23 @@ ion-tab-bar>* {
     font-family: "Decoration";
     color: #456a89;
 }
+#photoProduct {
+    position:relative;
+    background-color: #6b969627;
+    border: 0.2rem solid #6b9696;
 
+    width: 100%;
+    min-height: 35%;
+}
+#photoProduct>img {
+    min-width: 100%;
+    min-height: 100%;
 
-/*--cart*/
+    object-fit: cover;
+    object-position: center;
+}
+
+/*--cart--*/
 
 #orders, #extras {
     width: 90%;

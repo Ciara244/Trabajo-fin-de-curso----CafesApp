@@ -1,12 +1,12 @@
 import React from 'react';
 import { IonCard } from '@ionic/react';
 
-export default function Order({ order }) {
+export default function Order({ order, id }) {
     return (
-        <IonCard className="cardOrder">
+        <IonCard className={"cardOrder " + order.school +" "+ id}>
             <div className="orderContainer">
                 <div className="orderLeft">
-                    <h1>Usuario: {order.user ?? "John Doe"} - Id: {order.id ?? "?"}</h1>
+                    <h1>Usuario: {order.user ?? "John Doe"} - Id: {order.userId ?? "?"}</h1>
                     <h2>Productos:</h2>
                     <ul>
                         <li><p>{order.name ?? "producto"}</p></li>

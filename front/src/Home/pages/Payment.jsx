@@ -34,7 +34,7 @@ function Payment() {
 
     return (
         <div className={'padre'}>
-            <Header user={user} />
+            <Header user={user} menu={false}/>
             <div className={"cuerpo"}>
                 <div className={"cart"}>
                     <Alert />

@@ -49,20 +49,19 @@ function Menu() {
                 <div className={'padre'}>
                     {loader ? <Loading /> : null}
 
-                    <Header user={user} />
                     <div className={"cuerpo"}>
                         {productos.map((product) => (
                             <Item key={product.id} data={product} />
                         ))}
                         {/*<Item product={1}/> <- Si quieres ver las Items sin nada lo pones así */}
-                        <Item product={1} />
-                        <Item product={1} />
-                        <Item product={1} />
-                        <Item product={1} />
-                        <Item product={1} />
-                        <Item product={1} />
-                        <Item product={1} />
+                        <Item data={1}/>
+                        <Item data={1}/>
+                        <Item data={1}/>
+                        <Item data={1}/>
+                        <Item data={1}/>
                     </div>
+                    <Header user={user} menu={true}/>
+
                 </div>
             </IonContent>
         </IonPage>

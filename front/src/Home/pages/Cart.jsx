@@ -33,7 +33,7 @@ function Cart() {
     }
     return (
         <div className={'padre'}>
-            <Header user={user} />
+            <Header user={user} menu={false}/>
             <div className={"cuerpo"}>
                 <div className={"cart"}>
                     <Exit navi={"/tabs/menu"} />
