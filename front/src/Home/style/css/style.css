@@ -25,7 +25,7 @@ p, label, h5 {
     color: #bb8059ee;
 }
 
-p, b, label, button, ion-tab-bar>*, ion-item, li {
+p, b, label, button, ion-tab-bar>*, ion-item, li, .categorySelect {
     font-size: var(--app-font-size) !important;
     font-family: 'Txt';
 }
@@ -181,9 +181,7 @@ ion-list, ion-item{
     position: fixed;
     z-index: 100;
 }
-.cuerpo:has(.cardProduct) {
-    margin-top: 3rem;
-}
+
 
 .cabecera > * {
     display: flex;
@@ -455,6 +453,34 @@ ion-list, ion-item{
 }
 .buttonsPrice ion-icon {
     font-size: 1.3rem;
+}
+
+.categoryList {
+    width: 100%;
+    height: auto;
+
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.2rem 0.3rem;
+
+    background-color: #f8e3d8;
+}
+.categorySelect {
+    min-width: auto;
+
+    padding: 0.2rem;
+    border-radius: 0.9rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+
+    font-weight: bold;
+    cursor: pointer;
+
+    transition: all 0.2s ease;
 }
 
 /*Pedidos*/

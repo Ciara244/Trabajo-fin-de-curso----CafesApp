@@ -1,7 +1,9 @@
 import React from 'react';
 import { IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonGrid, IonRow } from '@ionic/react';
+import { useHistory } from 'react-router-dom';
 
 export default function Card({ data }) {
+    const nav = useHistory();
     
     if (!data) return null;
 
