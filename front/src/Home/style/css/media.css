@@ -1,0 +1,22 @@
+/* ADAPT */
+@media (max-width: 800px) {
+    .input>p {
+        font-size: medium;
+    }
+
+    #cafeBackground {
+        max-height: 30%;
+    }
+
+    .absolute {
+        width: 90%;
+    }
+    .absolute>*{
+        margin: 0.2rem;
+    }
+
+    .line{
+        width: 80%;
+    }
+}
+

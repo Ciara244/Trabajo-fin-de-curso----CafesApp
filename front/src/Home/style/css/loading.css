@@ -1,0 +1,170 @@
+/* https://uiverse.io/chase2k25/polite-walrus-78 */
+
+.loader-stage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100%;
+  width: 100%;
+  background-color: transparent;
+  overflow: hidden;
+  user-select: none;
+}
+
+.pixar-container {
+  --yellow: #f6d387;
+  --red: #bfdde6;
+  --blue: #48dbfb;
+  --depth-y: #e1ad21;
+  --depth-r: #8692d0;
+  --shadow-clr: rgba(0, 0, 0, 0.08);
+  --fs: 4.5em;
+  --bounce-ease: cubic-bezier(0.68, -0.6, 0.32, 1.6);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.laughing-group {
+  display: flex;
+  gap: 0.08em;
+  font-family: "Arial Rounded MT Bold", "Helvetica Rounded", system-ui,
+    sans-serif;
+  font-size: var(--fs);
+  font-weight: 900;
+  perspective: 50rem;
+}
+
+.toy-letter {
+  display: inline-block;
+  position: relative;
+  color: var(--yellow);
+  transform-origin: center bottom;
+  filter: drop-shadow(0 0.1em 0.2em var(--shadow-clr));
+  animation:
+    laugh-bounce 0.6s infinite alternate var(--bounce-ease),
+    laugh-wobble 0.3s infinite alternate ease-in-out;
+  text-shadow:
+    0 0.01em 0 var(--depth-y),
+    0 0.02em 0 var(--depth-y),
+    0 0.03em 0 var(--depth-y),
+    0 0.04em 0 var(--depth-y),
+    0 0.05em 0 var(--depth-y),
+    0 0.06em 0 var(--depth-y),
+    0 0.07em 0.1em rgba(0, 0, 0, 0.2);
+}
+
+.toy-letter::after {
+  content: "";
+  position: absolute;
+  top: 10%;
+  left: 15%;
+  width: 35%;
+  height: 20%;
+  /*background: rgba(255, 255, 255, 0.5);*/
+  border-radius: 100%;
+  filter: blur(0.125rem);
+  pointer-events: none;
+}
+
+.toy-letter:nth-child(even) {
+  color: var(--red);
+  animation-delay: 0.1s;
+  text-shadow:
+    0 0.01em 0 var(--depth-r),
+    0 0.02em 0 var(--depth-r),
+    0 0.03em 0 var(--depth-r),
+    0 0.04em 0 var(--depth-r),
+    0 0.05em 0 var(--depth-r),
+    0 0.06em 0 var(--depth-r),
+    0 0.07em 0.1em rgba(0, 0, 0, 0.2);
+}
+
+.toy-letter:nth-child(1) {
+  animation-delay: 0.05s;
+}
+.toy-letter:nth-child(2) {
+  animation-delay: 0.12s;
+}
+.toy-letter:nth-child(3) {
+  animation-delay: 0.08s;
+}
+.toy-letter:nth-child(4) {
+  animation-delay: 0.15s;
+}
+.toy-letter:nth-child(5) {
+  animation-delay: 0.03s;
+}
+.toy-letter:nth-child(6) {
+  animation-delay: 0.1s;
+}
+.toy-letter:nth-child(7) {
+  animation-delay: 0.18s;
+}
+
+@keyframes laugh-bounce {
+  0% {
+    transform: translateY(0) scale(1.1, 0.85);
+  }
+  100% {
+    transform: translateY(-0.5em) scale(0.95, 1.1) rotate(-5deg);
+  }
+}
+
+@keyframes laugh-wobble {
+  0% {
+    transform: rotate(-2deg);
+  }
+  100% {
+    transform: rotate(2deg);
+  }
+}
+
+@keyframes shadow-morph {
+  0% {
+    transform: scaleX(1.1);
+    opacity: 0.6;
+    filter: blur(0.125rem);
+  }
+  100% {
+    transform: scaleX(0.7);
+    opacity: 0.2;
+    filter: blur(0.313rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .toy-letter,
+  .ground-shadow {
+    animation: none !important;
+    transform: none !important;
+  }
+}
+
+@media (max-width: 800px) {
+  .loader-stage {
+    font-size: x-small;
+  }
+}
+
+#NoMoreLoader {
+  position: absolute;
+  z-index: 9999;
+  pointer-events:auto;
+  width: 100%;
+  height: 100%;
+
+  animation: myAnim 0.5s ease 0.5s 1 normal forwards;
+}
+
+@keyframes myAnim {
+	0% {
+		opacity: 1;
+	}
+
+	100% {
+		opacity: 0;
+	}
+}

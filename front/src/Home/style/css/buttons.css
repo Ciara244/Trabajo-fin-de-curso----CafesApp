@@ -1,0 +1,125 @@
+button:hover {
+    cursor: pointer;
+}
+
+.aquaButton, .brownButton {
+    font-family: 'txtBold' !important;
+    border: none;
+    border-radius: 0.3rem;
+}
+
+.brownButton {
+    width: 40%;
+    min-height: 4rem;
+    padding: 1rem;
+    color: rgb(255, 240, 240);
+    background-color: #a07c6f;
+}
+.brownButton:hover {
+    background-color: #bb9486;
+}
+
+.cancel {
+    font-family: "decoration";
+    font-weight: bold;
+
+    color: #bb8059ee;
+    border: #bb8059ee solid 0.125rem;
+    border-radius: 100%;
+    background-color: transparent;
+
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.cancelSpace {
+    width: 2rem;
+    display:flex;
+    justify-content: center;
+}
+.cancel:hover {
+    cursor: pointer;
+}
+
+
+input[type="checkbox"] {
+    border:#9d633d solid 0.2rem;
+    border-radius: 2px;
+    appearance:none;
+    -webkit-appearance:none;
+    -moz-appearance:none;
+    width: 1.2rem;
+    height: 1.2rem;
+    cursor:pointer;
+    background-color:transparent;
+}
+
+input[type="checkbox"]:checked {
+    border-radius: 2px;
+    appearance:none;
+    -webkit-appearance:none;
+    -moz-appearance:none;
+    width: 1.2rem;
+    height: 1.2rem;
+    cursor:pointer;
+    background:#d8a583ee url("../../../resources/img/cross.webp") 0.1rem 0.1rem no-repeat;
+}
+
+.blueButton {
+    min-width: 10%;
+    min-height: 10%;
+    padding: 1rem;
+    font-weight: bold;
+    font-family: 'txtBold';
+    color: rgb(69, 106, 137);
+    background-color: rgb(193, 205, 205);
+    border: none;
+    border-radius: 100%;
+}
+.blueButton:hover {
+    background-color: #91b7dc;
+    color: rgb(211, 222, 232);
+}
+
+#exit {
+    font-family: 'TxtBold';
+    font-size: 1rem;
+    font-weight: bolder;
+    color: #ead8ca;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background-color: #6b9696;
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    height: 2.5rem;
+    width: 2.5rem;
+
+    position: absolute;
+    top: -0.3rem;
+    left: -0.3rem;
+}
+#exit:hover, .aquaButton:hover {
+    cursor: pointer;
+    background-color: #87afa4;
+}
+
+.aquaButton {
+    width: 25%;
+    min-height: 3rem;
+    padding: 1rem;
+    color: #ead8ca !important;
+    background-color: #6b9696;
+}
+
+
+@media (max-width: 800px) {
+    .cancel {
+        width: 100%;
+    }
+}
