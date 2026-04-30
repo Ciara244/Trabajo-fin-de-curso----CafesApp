@@ -5,6 +5,7 @@
   "dependencies": {
     "@ionic/react": "^8.8.1",
     "@ionic/react-router": "^8.8.3",
+    "@supabase/supabase-js": "^2.104.1",
     "@testing-library/dom": "^10.4.1",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
