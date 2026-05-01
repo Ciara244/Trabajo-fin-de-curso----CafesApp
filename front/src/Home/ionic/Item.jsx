@@ -8,7 +8,7 @@ export default function Card({ data }) {
     if (!data) return null;
 
     return (
-        <IonCard className={"cardProduct"} onclick={() => nav.push("/product", {product:data})}>
+        <IonCard className={"cardProduct"} onClick={() => nav.push("/product", {product:data})}>
             <IonGrid>
                 <IonRow>
                     <ion-col size="6">

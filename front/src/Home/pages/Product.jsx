@@ -7,9 +7,6 @@ import { useHistory, useLocation } from "react-router-dom";
 import Header from "../components/Header";
 import Exit from "../components/Exit";
 
-/* RESOURCES */
-import { alertCircle } from 'ionicons/icons';
-
 function Product() {
     const { user } = useContext(UserLogin);
     const nav = useHistory();
@@ -18,6 +15,7 @@ function Product() {
     const prod = location.state?.product;
     //------------------------FUNCTIONS---------------------------------//
 
+    console.log("STATE:", location.state);
 
     return (
         <div className={'padre'}>
@@ -26,9 +24,9 @@ function Product() {
                 <div className={"product"}>
                     <div id="photoProduct">
                         <Exit navi={"/tabs/menu"} />
-                        <img alt={"Producto "+(prod.name??"name")} src={prod.photo} />
+                        <img alt={"Producto "+(prod.nombre??"name")} src={prod.imagen} />
                     </div>
-                    <h1>{prod.name??"Nombre producto"}</h1>
+                    <h1>{prod.nombre??"Nombre producto"}</h1>
                     <div className={"allergensList"}>
                         <ul>
                             <li>miau?</li>
@@ -41,10 +39,10 @@ function Product() {
                         <li>Ingrediente 2</li>
                         <li>Ingrediente 3</li>
                     </ul>
-                    <p>Categoría: {prod.category??"Item"}</p>
+                    <p>Categoría: {prod.categoria??"Item"}</p>
                 </div>
                 <div className={"purchase"}>
-                    <h3><span id="price">{prod.price??"0"} €</span></h3>
+                    <h3><span id="price">{prod["precio_€"]??"0"} €</span></h3>
                     <button className={"aquaButton"} onClick={() => nav.push("/tabs/menu")}>Añadir al carrito</button>
                 </div>
             </div>

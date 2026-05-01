@@ -112,7 +112,7 @@ ion-card{
 
     z-index: 0;
 }
-ion-card, .box, .cart, #photoProduct {
+ion-card, .box, .cart, #photoProduct, #photoProduct img {
     border-radius: 1.938rem 1.938rem 1.938rem 1.938rem;
     -webkit-border-radius: 1.938rem 1.938rem 1.938rem 1.938rem;
     -moz-border-radius: 1.938rem 1.938rem 1.938rem 1.938rem;
@@ -606,9 +606,9 @@ ion-list, ion-item{
     width: 100%;
     min-height: 35%;
 }
-#photoProduct>img {
-    min-width: 100%;
-    min-height: 100%;
+#photoProduct img {
+    width: 100%;
+    height: 100%;
 
     object-fit: cover;
     object-position: center;
