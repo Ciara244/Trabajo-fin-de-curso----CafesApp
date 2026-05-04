@@ -15,8 +15,6 @@ function Product() {
     const prod = location.state?.product;
     //------------------------FUNCTIONS---------------------------------//
 
-    console.log("STATE:", location.state);
-
     return (
         <div className={'padre'}>
             <div className={"cuerpo"}>

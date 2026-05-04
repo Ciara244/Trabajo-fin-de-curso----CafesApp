@@ -24,7 +24,7 @@ export default function Header({ user, menu }) {
             {user?.id === "Admin00" &&
                 <>
                     <div>
-                        <button className={"brownButton"}>Añadir</button>
+                        <button className={"brownButton"} onClick={() => nav.push("/add")}>Añadir</button>
                         <button className={"brownButton"}>Borrar</button>
                     </div>
                 </>
