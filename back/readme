@@ -1,1 +1,7 @@
-npm install @supabase/supabase-js
+npm install @supabase/supabase-jsç
+npm install @stripe/stripe-js @stripe/react-stripe-js
+
+para pagar 42424242424242.... 12/26, 123, 12345
+
+
+en back .. npm start ... node server.js

@@ -73,7 +73,6 @@ input[type="checkbox"]:checked {
     padding: 1rem;
     font-weight: bold;
     font-family: 'txtBold';
-    color: rgb(69, 106, 137);
     background-color: rgb(193, 205, 205);
     border: none;
     border-radius: 100%;
@@ -117,6 +116,67 @@ input[type="checkbox"]:checked {
     background-color: #6b9696;
 }
 
+/* SELECTOR DE OPCIONES (PRODUCTO) */
+.btn-opcion-activa {
+    background-color: #689d9d !important;
+    color: #ffffff !important;
+}
+
+.btn-opcion-inactiva {
+    background-color: #efceb7 !important;
+    color: #5c4134 !important;
+}
+
+/* --- BOTONES --- */
+.btn-volver {
+    background-color: #efceb7;
+    color: #5c4134;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 0.95rem;
+}
+
+.btn-accion {
+    flex: 1;
+    color: #ffffff;
+    border: none;
+    padding: 14px;
+    border-radius: 14px;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.btn-confirmar {
+    color: #fff;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 0.95rem;
+    flex-shrink: 0;
+}
+
+.btn-editar-menu {
+    color: #ffffff;
+    border: none;
+    padding: 10px 22px;
+    border-radius: 20px;
+    font-weight: bold;
+    font-size: 0.95rem;
+    cursor: pointer;
+}
+
+/* CLASES DE COLORES PARA BOTONES */
+.bg-red { background-color: #c0392b !important; }
+.bg-teal { background-color: #689d9d !important; }
+.bg-teal-light { background-color: #b2cbcb !important; }
+.bg-brown { background-color: #5c4134 !important; }
 
 @media (max-width: 800px) {
     .cancel {

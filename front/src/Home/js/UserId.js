@@ -1,13 +1,13 @@
 import { createContext, useState } from "react";
 
-export const UserLogin = createContext(); //The id of the user will be saved in this variable.
+export const UserLogin = createContext();
 
 export function UserProvider({children}) {
-    const [user, setUser] = useState(null); //User info
-    const [fontSize, setFontSize] = useState(1); //FontSize that the user had selected.
-    const [color, setColor] = useState("#ead8ca"); //Color of the background of the app that the user had selected.
-    const [priceUser, setPriceUser] = useState(0); //Total price of all the products
-    const [basket, setBasket] = useState(0); //All the products selected
+    const [user, setUser] = useState(null);
+    const [fontSize, setFontSize] = useState(1);
+    const [color, setColor] = useState("#ead8ca");
+    const [priceUser, setPriceUser] = useState(0);
+    const [basket, setBasket] = useState(0);
 
     const login = (userData) => {
         setUser(userData);
@@ -23,6 +23,8 @@ export function UserProvider({children}) {
         setColor("#ead8ca");
         setPriceUser(0);
         setBasket(0);
+        // Limpia el carrito al cerrar sesión para que no quede el carrito de otro usuario
+        localStorage.removeItem("carrito");
     };
 
     return (
@@ -31,10 +33,3 @@ export function UserProvider({children}) {
         </UserLogin.Provider>
     )
 }
-
-/*
-useContext:
-https://elblogdelprogramador.com/posts/introduccion-al-contexto-de-react-guia-completa-actualizada/#gsc.tab=0
-https://es.react.dev/reference/react/createContext
-https://keepcoding.io/blog/context-para-autenticacion-en-aplicacion-react/
-*/

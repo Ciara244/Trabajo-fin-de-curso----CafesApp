@@ -1,41 +1,62 @@
+
+/**
+ * Register.jsx
+ * Página de registro para nuevos usuarios (alumnos o profesores).
+ * Permite a los usuarios crear una cuenta proporcionando su nombre, contraseña, rol (alumno o profesor), colegio, horario y si son alérgicos a algún alimento.
+ * El formulario incluye validación para asegurar que se completen todos los campos necesarios antes de permitir el registro.
+ * Al registrarse, la información se guarda en la tabla Usuario de Supabase, y el usuario es redirigido a la página de inicio de sesión.
+ * Se muestra un mensaje de alerta en caso de errores (como nombre de usuario ya registrado o problemas de conexión) o al completar el registro exitosamente.
+ * El diseño es sencillo y claro, con controles intuitivos para seleccionar el rol, colegio, horario y alergias, así como un acuerdo de términos que el usuario debe aceptar antes de registrarse.
+ * El código está estructurado de forma clara, con funciones separadas para manejar cada acción (mostrar términos, habilitar el botón de registro, procesar el registro)
+ *  y un sistema de alertas para dar feedback al usuario en cada paso del proceso.
+ * Se utiliza el contexto UserLogin para gestionar el estado del usuario en la aplicación, aunque en esta página específica el enfoque principal es la creación de la cuenta y 
+ * la interacción con Supabase para guardar los datos del nuevo usuario.
+ */
+
 import React, { useState } from "react";
 import { useHistory } from 'react-router-dom';
 import "../style/import.css";
 
 /* COMPONENTS */
 import TextInput from "../components/input/Input";
-import Radio from "../components/input/Radio";
 import Selector from "../ionic/Selector";
 import Schedule from "../ionic/Schedule";
+import { IonAlert } from '@ionic/react';
 
 /* RESOURCES */
 import tick from "../../resources/img/tick.webp";
-import * as CheckInput from "../js/checkInputs";
-import Alert from "../ionic/Alert";
+
+/* IMPORTAMOS SUPABASE */
+import { supabase } from "../../services/supabaseClient";
 
 function Register() {
     const nav = useHistory();
     
-    const [leer, setLeer] = useState(false); //Make visible or invisible to see the div "absolute"
-    var [enable, setEnable] = useState(true); //Enable or disable the button to register in the app.
+    const [leer, setLeer] = useState(false); 
+    const [enable, setEnable] = useState(true); 
     
+    const [showAlert, setShowAlert] = useState(false);
+    const [alertMessage, setAlertMessage] = useState("");
+    const [alertHeader, setAlertHeader] = useState("Atención");
+
+    //  1. ESTADOS PARA GUARDAR LA INFORMACIÓN 
+    const [rol, setRol] = useState("alumno"); 
+    const [colegio, setColegio] = useState("Colegio San José"); 
+    const [horario, setHorario] = useState("Mañana");
+    const [alergico, setAlergico] = useState(false); // NUEVO: Estado para alergias
+
     //-----------------------FUNCTIONS---------------------------//
-    //When the user click on "Términos" this will make appear the div "absolute"
-    function terms() {
-        setLeer(true);
-    }
-    //When the user is done, then they would click in "agree" that hides the div. Making enable to check in the checkbox.
+    function terms() { setLeer(true); }
+
     function ok() {
         setLeer(false);
         const checkIn = document.getElementById("agree");
         checkIn.disabled = false;
-    
         checkIn.classList.remove("disabled");
     }
-    //If the user check or uncheck the checkbox this will trigger this function. Making enabled or disabled the button of register.
+
     function buttonRegister() {
         const checkIn = document.getElementById("agree");
-    
         const buttonIn = document.getElementById("allow");
         if (checkIn.checked) {
             setEnable(false);
@@ -46,42 +67,116 @@ function Register() {
         }
     }
 
-    function loadRegister () {
-            const result = CheckInput.Adding("/")
-    
-            if (!result.bol) {
-                return;
-            }
-    
-            nav.push(result.navi);
+    async function loadRegister() {
+        const id = document.getElementById("Name")?.value;
+        const pass = document.getElementById("Password")?.value;
+        
+        if (!id || !pass || !colegio || !horario) {
+            setAlertHeader("Faltan datos");
+            setAlertMessage("Por favor, completa todos los campos (nombre, contraseña, colegio y horario).");
+            setShowAlert(true);
+            return;
         }
+
+        try {
+            // 2. GUARDAMOS EN SUPABASE 
+            const { error } = await supabase
+                .from('Usuario')
+                .insert([
+                    { 
+                        nombre: id,          
+                        pass: pass,          
+                        rango: rol,          
+                        institucion: colegio,
+                        turno: horario,
+                        alergias: alergico   // NUEVO: Guardamos el booleano en la BBDD
+                    }
+                ]);
+
+           if (error) {
+                console.error("Error de inserción:", error);
+                
+                if (error.code === '23505' || error.message.includes('duplicate')) {
+                    setAlertHeader("Nombre no disponible");
+                    setAlertMessage("Ese nombre de usuario ya está registrado. Por favor, elige otro diferente.");
+                } else {
+                    setAlertHeader("Error al registrar");
+                    setAlertMessage("No se pudo completar el registro. Inténtalo de nuevo más tarde.");
+                }
+                
+                setShowAlert(true);
+            } else {
+                setAlertHeader("¡Registro Exitoso!");
+                setAlertMessage("Tu cuenta ha sido creada. Ahora puedes iniciar sesión.");
+                setShowAlert(true);
+                setTimeout(() => nav.push("/"), 2000); 
+            }
+
+        } catch (error) {
+            setAlertHeader("Error General");
+            setAlertMessage("Hubo un problema de conexión.");
+            setShowAlert(true);
+        }
+    }
     //------------------------------------------------------------------//
     
     return (
         <div className={'inicio'}>
-            <Alert />
+            
+            <IonAlert
+                isOpen={showAlert}
+                onDidDismiss={() => setShowAlert(false)}
+                header={alertHeader}
+                message={alertMessage}
+                buttons={['OK']}
+                cssClass="alertStyle"
+            />
+
             <h1>REGISTRO</h1>
             <TextInput txt="Nombre" valor="text" id="Name" />
             <TextInput txt="Contraseña" valor="password" id="Password" />
+            
             <div className={'line'}>
                 <h5>Rol:</h5>
-                <Radio txt="alumno" name="rol"/>
-                <Radio txt="profesor" name="rol"/>
+                <div style={{ display: 'flex', gap: '10px', color: '#bb8059ee', fontFamily: 'Txt' }}>
+                    <label>
+                        <input type="radio" name="rol" value="alumno" defaultChecked onChange={(e) => setRol(e.target.value)} /> Alumno
+                    </label>
+                    <label>
+                        <input type="radio" name="rol" value="profesor" onChange={(e) => setRol(e.target.value)} /> Profesor
+                    </label>
+                </div>
             </div>
+            
             <div className={'line'}>
                 <h5>Colegio:</h5>
-                <Selector />
+                <Selector onSeleccion={setColegio} />
             </div>
+            
             <div className={'line'}>
                 <h5>Horario:</h5>
-                <Schedule />
+                <Schedule onSeleccion={setHorario} />
             </div>
+
+            {/* NUEVO: Checkbox de alergias */}
+            <div className={'line'} style={{ display: 'flex', alignItems: 'center', gap: '10px', color: '#bb8059ee', fontFamily: 'Txt', margin: '15px 0' }}>
+                <input 
+                    type="checkbox" 
+                    id="alergias" 
+                    checked={alergico}
+                    onChange={(e) => setAlergico(e.target.checked)} 
+                    style={{ width: '20px', height: '20px' }}
+                />
+                <label htmlFor="alergias" style={{ margin: 0 }}>
+                    Soy alérgico/a a algún alimento
+                </label>
+            </div>
+            
             <div className={"checkStyle"}>
                 <input type="checkbox" id="agree" className="disabled" onChange={() => buttonRegister()} disabled/>
                 <div className={"checkmark"} />
                 <p>Estoy de acuerdo con los <b onClick={() => terms()}>términos.</b></p>
             </div>
-
 
             <button onClick={() => loadRegister()} className={"brownButton disabled"} id={"allow"} disabled={enable}>REGISTRARSE</button>
             <button onClick={() => {nav.push("/")}} className={"brownButton"}>VOLVER</button>
@@ -101,7 +196,6 @@ function Register() {
 
         </div>
     )
-
 }
 
 export default Register;

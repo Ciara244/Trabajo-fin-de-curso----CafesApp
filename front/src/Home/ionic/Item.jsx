@@ -1,5 +1,13 @@
+/**
+ * Item.jsx
+ * Componente de tarjeta para mostrar un producto en el menú.
+ * Recibe un objeto "data" con la información del producto (nombre, imagen, categoría, precio).
+ * Al hacer clic en la tarjeta, navega a la página de detalles del producto pasando la información por estado.
+ * El diseño incluye una imagen a la izquierda y el contenido (nombre, categoría, precio) a la derecha, con algunos elementos decorativos.
+ */
+
 import React from 'react';
-import { IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonGrid, IonRow } from '@ionic/react';
+import { IonCard } from '@ionic/react';
 import { useHistory } from 'react-router-dom';
 
 export default function Card({ data }) {
@@ -8,30 +16,42 @@ export default function Card({ data }) {
     if (!data) return null;
 
     return (
-        <IonCard className={"cardProduct"} onClick={() => nav.push("/product", {product:data})}>
-            <IonGrid>
-                <IonRow>
-                    <ion-col size="6">
-                        <img alt={data.nombre} src={data.imagen} style={{ width: '100%', objectFit: 'cover' }} />
-                    </ion-col>
-                    
-                    <ion-col size="4">
-                        <IonCardHeader>
-                            <IonCardTitle><h1>{data.nombre}</h1></IonCardTitle>
-                            
-                            {/* Hemos quitado alergenos temporalmente porque es un objeto JSON */}
-                            <IonCardContent><p>{data.categoria}</p></IonCardContent>
-                        </IonCardHeader>
-                    </ion-col>
-                    
-                    <ion-col size="2" style={{ display: 'flex', justifyContent: 'center' }}>
-                        <IonCardContent>
-                             <p style={{ margin: 0, fontSize: '1.1rem' }}><b>{data["precio_€"]} €</b></p>
-                        </IonCardContent>
-                    </ion-col>
-                    
-                </IonRow>
-            </IonGrid>
+        <IonCard 
+            className="item-card" 
+            onClick={() => nav.push("/product", { product: data })} 
+        >
+            {/* 1. SECCIÓN DE LA IMAGEN */}
+            <div className="item-img-wrapper">
+                <img 
+                    alt={data.nombre} 
+                    src={data.imagen} 
+                    className="item-img"
+                />
+            </div>
+
+            {/* 2. SECCIÓN DEL CONTENIDO */}
+            <div className="item-content">
+                
+                <h2 className="item-title">
+                    {data.nombre}
+                </h2>
+
+                <div className="item-dots-wrapper">
+                    <div className="item-dot-orange"></div>
+                    <div className="item-dot-brown"></div>
+                </div>
+
+                <p className="item-category">
+                    {data.categoria}
+                </p>
+
+                <div className="item-price-wrapper">
+                    <span className="item-price">
+                        {data["precio_€"]} €
+                    </span>
+                </div>
+
+            </div>
         </IonCard>
     );
 }
