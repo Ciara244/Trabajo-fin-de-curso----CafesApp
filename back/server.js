@@ -91,6 +91,7 @@ function print(order) {
 app.post("/printTicket", (req, res) => {
     const order = req.body;
     print(order);
+<<<<<<< HEAD
     res.json({ ok: true });
 });
 
@@ -100,3 +101,26 @@ app.listen(PORT, () => {
 });
 
 
+=======
+    res.json({ok:true});
+})
+
+
+/////////////////////////
+// Para poner en el front
+/*
+async function imprimirTicket(order) {
+    try {
+        await fetch("http://localhost:3000/printTicket", {
+            method: "POST",
+            headers: {"Content-Type":"application/json"},
+            body: JSON.stringify(order)
+        });
+    } catch (error) {
+        console.log("ERROR");
+    };
+};
+
+imprimirTicket(order);
+*/
+>>>>>>> ce647397e25a6a5cfafd887170d18cf6e454551e

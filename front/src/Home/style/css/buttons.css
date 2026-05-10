@@ -82,15 +82,11 @@ input[type="checkbox"]:checked {
     color: rgb(211, 222, 232);
 }
 
-#exit {
+#exit, #addIcon {
     font-family: 'TxtBold';
     font-size: 1rem;
     font-weight: bolder;
-    color: #ead8ca;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    color: #ead8ca !important;
 
     background-color: #6b9696;
     border-radius: 50%;
@@ -99,14 +95,28 @@ input[type="checkbox"]:checked {
     height: 2.5rem;
     width: 2.5rem;
 
-    position: absolute;
+    display: flex;
     top: -0.3rem;
-    left: -0.3rem;
+
+    position: absolute;
 }
 #exit:hover, .aquaButton:hover {
     cursor: pointer;
     background-color: #87afa4;
 }
+
+#exit {
+    align-items: center;
+    justify-content: center;
+    left: -0.3rem;
+}
+
+#addIcon {
+    font-size: xx-large !important;
+    justify-content: center;
+    right: -1rem;
+}
+
 
 .aquaButton {
     width: 25%;

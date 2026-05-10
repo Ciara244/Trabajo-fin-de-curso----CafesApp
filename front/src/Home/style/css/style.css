@@ -62,7 +62,7 @@ img {
     -ms-user-select: none;
 }
 
-input[type="text"], input[type="password"] {
+input[type="text"], input[type="password"], input[type="number"] {
     background-color: transparent;
     border: none;
     height:100%;
@@ -73,6 +73,10 @@ input[type="text"], input[type="password"] {
 
 input::placeholder {
     color: #542a0e77;
+}
+
+form {
+    height: 100%;
 }
 
 .alertStyle {
@@ -103,9 +107,6 @@ input::placeholder {
     }
 }
 
-ion-card:not(.cardOrder){
-    min-height: 40%;
-}
 ion-card{
     width: 90%;
     margin: 1rem;
@@ -180,7 +181,6 @@ ion-list, ion-item{
     position: fixed;
     z-index: 100;
 }
-
 
 .cabecera > * {
     display: flex;
@@ -315,6 +315,10 @@ ion-list, ion-item{
 }
 .line>div>*{
     width: 100%;
+}
+
+.cardProduct {
+    min-height: 10rem !important;
 }
 
 /*------------------- CLASES ESPECIFICAS -------------------*/
@@ -554,12 +558,28 @@ ion-list, ion-item{
     align-self: center;
     text-align: center;
 }
-.product *:not(#exit, #price, .aquaButton) {
+.product *:not(#exit, #price, .aquaButton, #addIcon) {
     color: #6b9696 !important;
 }
 .product>ul li {
     list-style: inside;
 }
+
+.productAdd>div{
+    position: relative;
+
+    border: 0.1rem dashed #6b9696;
+    background-color: #6b969627;
+}
+.productAdd {
+    height: 100% !important;
+}
+.productAdd>.aquaButton{
+    width: 60%;
+    min-height: 0;
+    padding: 0.5rem !important;
+}
+
 .allergensList {
     width: 100%;
 }
@@ -582,6 +602,28 @@ ion-list, ion-item{
     width: 60%;
 }
 
+ul:has(.allergensDiv), ul:has(.ingredientsDiv), ul:has(div>input[type="radio"]) {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+
+    flex-wrap: wrap;
+}
+
+.smallImg {
+    width: 20% !important;
+    height: auto !important;
+    background-color: transparent !important;
+
+    border-radius: 0 !important;
+    -webkit-border-radius: 0 !important;
+    -moz-border-radius: 0 !important;
+}
+.bigImg {
+    width: 100%;
+}
+
+
 /*------------------- ID -------------------*/
 #cafeBackground {
     border-radius: 100%;
@@ -603,7 +645,7 @@ ion-list, ion-item{
     border: 0.2rem solid #6b9696;
 
     width: 100%;
-    min-height: 35%;
+    height: 15rem;
 }
 #photoProduct img {
     width: 100%;
@@ -613,6 +655,14 @@ ion-list, ion-item{
     object-position: center;
 }
 
+#photoProduct:has(.smallImg) {
+    display: flex;
+    justify-content: center !important;
+    align-items: center !important;
+}
+#addProduct {
+    cursor: pointer;
+}
 /*--cart--*/
 
 #orders, #extras {
@@ -631,6 +681,7 @@ ion-list, ion-item{
 #price {
     color: #199c86;
 }
+
 
 /* ANIMATIONS */
 @keyframes myAnim {
@@ -665,12 +716,12 @@ ion-list, ion-item{
 }
 
 
-ion-card:not(.cardOrder), button:active {
+ion-card:not(.cardOrder), button:active, #addProduct:active {
     transform: scale(1.0);
     transition: transform 0.3s ease;
 }
 
-ion-card:active:not(.cardOrder), button:active {
+ion-card:active:not(.cardOrder), button:active, #addProduct:active {
   transform: scale(0.98);
   transition: transform 0.1s ease;
 }
