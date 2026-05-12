@@ -93,6 +93,7 @@ function print(order) {
             .text(String(dateTime))
             .text(enc(String(order.colegio)))
             .raw(Buffer.from([0x1B, 0x45, 0x00]))
+            .text("") //espacio
 
             .align("lt")
             .text(enc(`PEDIDO NÚMERO: ${order.id}`))
