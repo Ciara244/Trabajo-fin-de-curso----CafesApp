@@ -143,7 +143,7 @@ function Settings() {
                                 </div>
                                 <div>
                                     <b>Alergias:</b> 
-                                    <p>{user?.alergias ? "Sí" : "No"}</p>
+                                    <p>{user?.alergico ? "Sí" : "No"}</p>
                                 </div>
                             </div>
                             <div className={"line2"}/>

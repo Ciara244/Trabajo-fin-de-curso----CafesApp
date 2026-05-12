@@ -137,6 +137,7 @@ function FormularioPago({ user, carrito, totalCalculado }) {
                 usuario_id: pedidoInsertado.usuario_id,
                 usuario_nombre: user.nombre,
                 colegio: user.institucion || '—',
+                alergico: user.alergico,
                 alergias: user.alergias,
                 productos: productos,
                 extras: extras,

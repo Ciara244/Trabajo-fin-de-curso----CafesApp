@@ -51,22 +51,26 @@ export function ticketGenerator(order) {
                 .join("\n")
             : "";
 
-        const alergico = (order.alergias === true ? "SI" : "NO");
+        const alergico = (order.alergico ? 
+            order.alergias
+            .map(alergia => enc(`${alergia}`))
+            .join(" ")
+            : "NO");
         const dateTime = formatearDate(order.fecha);
 
         const ticket =
-            "\x1B\x74\x13" +
+            "\x1B\x74\x13" + "\x1B\x61\x01" + "\x1B\x45\x01" +
             dateTime + "\n" +
-            enc(order.colegio) + "\n" +
+            enc(order.colegio) + "\n\n" + "\x1B\x45\x00" + "\x1B\x61\x00" +
             enc(`PEDIDO NÚMERO: ${order.id}`) + "\n" +
             enc(`USUARIO ID: #${order.usuario_id}`) + "\n" +
             enc(`NOMBRE: ${order.usuario_nombre}`) + "\n" +
-            enc(`ALERGIA: ${alergico}`) + "\n" +
+            enc(`ALERGIAS: ${alergico}`) + "\n" +
             linea + "\n" +
             productosStr + "\n" +
             extrasStr + "\n" +
-            linea + "\n" +
-            enc(`TOTAL: ${order.total.toFixed(2)}€`) + "\n" +
+            linea + "\n" + "\x1B\x61\x01" + "\x1B\x45\x01" +
+            enc(`TOTAL: ${order.total.toFixed(2)}€`) + "\n\n\n\n" + "\x1B\x45\x00" +
             "\x1D\x56\x00";
     
     return ticket;

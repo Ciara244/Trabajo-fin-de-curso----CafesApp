@@ -34,6 +34,7 @@ import { supabase } from "../../services/supabaseClient";
 
 /* BCRYPT para hashear contraseñas en el frontend */
 import bcrypt from 'bcryptjs';
+import Allergies from "../ionic/Allergies";
 
 function Register() {
     const nav = useHistory();
@@ -48,7 +49,7 @@ function Register() {
     const [rol, setRol] = useState("alumno"); 
     const [colegio, setColegio] = useState("IES José Zerpa"); 
     const [horario, setHorario] = useState("Mañana");
-    const [alergico, setAlergico] = useState(false);
+    const [alergias, setAlergias] = useState([]);
 
     //-----------------------FUNCTIONS---------------------------//
     function terms() { setLeer(true); }
@@ -88,6 +89,8 @@ function Register() {
             // 10 rounds es suficiente para frontend (12 puede ser lento en móviles)
             const passHash = await bcrypt.hash(pass, 10);
 
+            const alergico = alergias.length >=1 ? true : false;
+
             const { error } = await supabase
                 .from('Usuario')
                 .insert([
@@ -97,7 +100,8 @@ function Register() {
                         rango: rol,          
                         institucion: colegio,
                         turno: horario,
-                        alergias: alergico
+                        alergico: alergico,
+                        alergias: alergias
                     }
                 ]);
 
@@ -144,9 +148,9 @@ function Register() {
             <TextInput txt="Nombre" valor="text" id="Name" />
             <TextInput txt="Contraseña" valor="password" id="Password" />
             
-            <div className={'line'}>
+            <div className={'line'} id="rolSelectorRadio">
                 <h5>Rol:</h5>
-                <div style={{ display: 'flex', gap: '10px', color: '#bb8059ee', fontFamily: 'Txt' }}>
+                <div>
                     <label>
                         <input type="radio" name="rol" value="alumno" defaultChecked onChange={(e) => setRol(e.target.value)} /> Alumno
                     </label>
@@ -166,17 +170,9 @@ function Register() {
                 <Schedule onSeleccion={setHorario} />
             </div>
 
-            <div className={'line'} style={{ display: 'flex', alignItems: 'center', gap: '10px', color: '#bb8059ee', fontFamily: 'Txt', margin: '15px 0' }}>
-                <input 
-                    type="checkbox" 
-                    id="alergias" 
-                    checked={alergico}
-                    onChange={(e) => setAlergico(e.target.checked)} 
-                    style={{ width: '20px', height: '20px' }}
-                />
-                <label htmlFor="alergias" style={{ margin: 0 }}>
-                    Soy alérgico/a a algún alimento
-                </label>
+            <div className={'line'}>
+                <h5>Alergias:</h5>
+                <Allergies onChange={setAlergias}/>
             </div>
             
             <div className={"checkStyle"}>

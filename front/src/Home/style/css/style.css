@@ -311,19 +311,19 @@ ion-list, ion-item{
 
 .line {
     display: flex;
-    width: 20%;
-    justify-content: baseline;
+    justify-content: space-between;
+    width: 100%;
 }
-.line>* {
-    margin: auto 0.5rem auto 0.5rem;
+#rolSelectorRadio>div {
+    display: flex; 
+    justify-content: space-around;
+    align-items: center;
 }
 .line>div {
-    display: flex;
-    width: 80%;
-    justify-content: space-between;
+    width: 70%;
 }
-.line>div>*{
-    width: 100%;
+.line>h2 {
+    width: 20%;
 }
 
 .cardProduct {
