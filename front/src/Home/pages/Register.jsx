@@ -1,4 +1,3 @@
-
 /**
  * Register.jsx
  * Página de registro para nuevos usuarios (alumnos o profesores).
@@ -11,7 +10,11 @@
  *  y un sistema de alertas para dar feedback al usuario en cada paso del proceso.
  * Se utiliza el contexto UserLogin para gestionar el estado del usuario en la aplicación, aunque en esta página específica el enfoque principal es la creación de la cuenta y 
  * la interacción con Supabase para guardar los datos del nuevo usuario.
+ * Se ha implementado bcrypt para hashear las contraseñas en el frontend antes de enviarlas a Supabase, asegurando que las contraseñas se almacenen de forma segura 
+ * en la base de datos.
  */
+
+
 
 import React, { useState } from "react";
 import { useHistory } from 'react-router-dom';
@@ -29,6 +32,9 @@ import tick from "../../resources/img/tick.webp";
 /* IMPORTAMOS SUPABASE */
 import { supabase } from "../../services/supabaseClient";
 
+/* BCRYPT para hashear contraseñas en el frontend */
+import bcrypt from 'bcryptjs';
+
 function Register() {
     const nav = useHistory();
     
@@ -39,11 +45,10 @@ function Register() {
     const [alertMessage, setAlertMessage] = useState("");
     const [alertHeader, setAlertHeader] = useState("Atención");
 
-    //  1. ESTADOS PARA GUARDAR LA INFORMACIÓN 
     const [rol, setRol] = useState("alumno"); 
-    const [colegio, setColegio] = useState("Colegio San José"); 
+    const [colegio, setColegio] = useState("IES José Zerpa"); 
     const [horario, setHorario] = useState("Mañana");
-    const [alergico, setAlergico] = useState(false); // NUEVO: Estado para alergias
+    const [alergico, setAlergico] = useState(false);
 
     //-----------------------FUNCTIONS---------------------------//
     function terms() { setLeer(true); }
@@ -79,21 +84,24 @@ function Register() {
         }
 
         try {
-            // 2. GUARDAMOS EN SUPABASE 
+            // HASHEAMOS la contraseña antes de guardarla
+            // 10 rounds es suficiente para frontend (12 puede ser lento en móviles)
+            const passHash = await bcrypt.hash(pass, 10);
+
             const { error } = await supabase
                 .from('Usuario')
                 .insert([
                     { 
                         nombre: id,          
-                        pass: pass,          
+                        pass: passHash,      // guardamos el hash, nunca el texto plano
                         rango: rol,          
                         institucion: colegio,
                         turno: horario,
-                        alergias: alergico   // NUEVO: Guardamos el booleano en la BBDD
+                        alergias: alergico
                     }
                 ]);
 
-           if (error) {
+            if (error) {
                 console.error("Error de inserción:", error);
                 
                 if (error.code === '23505' || error.message.includes('duplicate')) {
@@ -158,7 +166,6 @@ function Register() {
                 <Schedule onSeleccion={setHorario} />
             </div>
 
-            {/* NUEVO: Checkbox de alergias */}
             <div className={'line'} style={{ display: 'flex', alignItems: 'center', gap: '10px', color: '#bb8059ee', fontFamily: 'Txt', margin: '15px 0' }}>
                 <input 
                     type="checkbox" 

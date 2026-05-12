@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkcafesapp_evelyn_ciara=self.webpackChunkcafesapp_evelyn_ciara||[]).push([[325],{325(e,a,c){c.d(a,{PrinterWeb:()=>s});class s{async printTicket(){console.warn("El plugin no esta pa pc")}}}}]);
+//# sourceMappingURL=325.38bbb4dc.chunk.js.map

@@ -20,7 +20,8 @@ import { UserLogin } from "../js/UserId";
 import { IonContent, IonPage, IonAlert } from "@ionic/react";
 import { supabase } from "../../services/supabaseClient";
 
-/* COMPONENTS */
+/* BCRYPT para hashear la nueva contraseña */
+import bcrypt from 'bcryptjs';
 
 function Settings() {
     const nav = useHistory();
@@ -52,19 +53,20 @@ function Settings() {
     };
     //------------------------------------------------------//
 
-    // Función para actualizar la contraseña en Supabase
     async function actualizarPassword(nuevaPass) {
         if (!nuevaPass || nuevaPass.trim() === "") {
             setAlertMessage("La contraseña no puede estar vacía.");
             setShowAlert(true);
             return;
         }
-        
+
         try {
-            // Actualizamos la columna 'pass' en la tabla 'Usuario'
+            // Hasheamos la nueva contraseña antes de guardarla
+            const passHash = await bcrypt.hash(nuevaPass, 10);
+
             const { error } = await supabase
                 .from('Usuario')
-                .update({ pass: nuevaPass })
+                .update({ pass: passHash })  // guardamos el hash
                 .eq('id', user.id);
 
             if (error) throw error;
@@ -122,53 +124,47 @@ function Settings() {
                         <div className={"box"} >
                             
                             {/* --- INFORMACIÓN DEL USUARIO ORDENADA --- */}
-                            <div style={{ 
-                                display: 'flex', 
-                                flexDirection: 'column', 
-                                gap: '12px', 
-                                textAlign: 'left', 
-                                marginBottom: '20px', 
-                                color: '#3d2318',
-                                padding: '15px',
-                                borderRadius: '10px'
-                            }}>
-                                <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid rgba(104, 157, 157, 0.3)', paddingBottom: '8px' }}>
-                                    <b style={{ color: '#3d2318', textDecoration: 'none' }}>ID:</b> 
-                                    <span>{user?.id ?? "N/A"}</span>
+                            <div>
+                                <div>
+                                    <b>ID:</b> 
+                                    <p>{user?.id ?? "N/A"}</p>
                                 </div>
-                                <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid rgba(104, 157, 157, 0.3)', paddingBottom: '8px' }}>
-                                    <b style={{ color: '#3d2318', textDecoration: 'none' }}>Nombre:</b> 
-                                    <span>{user?.nombre ?? "N/A"}</span>
+                                <div>
+                                    <b>Nombre:</b> 
+                                    <p>{user?.nombre ?? "N/A"}</p>
                                 </div>
-                                <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid rgba(104, 157, 157, 0.3)', paddingBottom: '8px' }}>
-                                    <b style={{ color: '#3d2318', textDecoration: 'none' }}>Rol:</b> 
-                                    <span style={{ textTransform: 'capitalize' }}>{user?.rango ?? "N/A"}</span>
+                                <div>
+                                    <b>Rol:</b> 
+                                    <p style={{ textTransform: 'capitalize' }}>{user?.rango ?? "N/A"}</p>
                                 </div>
-                                <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid rgba(104, 157, 157, 0.3)', paddingBottom: '8px' }}>
-                                    <b style={{ color: '#3d2318', textDecoration: 'none' }}>Institución:</b> 
-                                    <span style={{ textAlign: 'right' }}>{user?.institucion ?? "N/A"}</span>
+                                <div>
+                                    <b>Institución:</b> 
+                                    <p style={{ textAlign: 'right' }}>{user?.institucion ?? "N/A"}</p>
                                 </div>
-                                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                                    <b style={{ color: '#3d2318', textDecoration: 'none' }}>Alergias:</b> 
-                                    <span>{user?.alergias ? "Sí" : "No"}</span>
+                                <div>
+                                    <b>Alergias:</b> 
+                                    <p>{user?.alergias ? "Sí" : "No"}</p>
                                 </div>
                             </div>
+                            <div className={"line2"}/>
+
                             {/* ------------------------------- */}
 
                             {user?.id === "Admin00" &&
                                 <>
                                     <div>
-                                        <p style={{ margin: '0 0 10px 0', fontWeight: 'bold', color: '#3d2318' }}>Modificar trabajadores:</p>
+                                        <p>Modificar trabajadores:</p>
                                         <div className={"buttons"}>
                                             <button className={"blueButton"} onClick={() => nav.push("/workers")}>Editar</button>
                                         </div>
                                     </div>
-                                    <div className={"line2"} style={{ margin: '20px 0' }} />
+                                    <div className={"line2"}/>
+
                                 </>
                             }
                             
                             <div>
-                                <p style={{ margin: '0 0 10px 0', fontWeight: 'bold', color: '#3d2318' }}>Tamaño de las letras:</p>
+                                <p>Tamaño de las letras:</p>
                                 <div className={"buttons"}>
                                     <button className={"blueButton"} onClick={x1}>x1</button>
                                     <button className={"blueButton"} onClick={x2}>x2</button>
@@ -176,21 +172,21 @@ function Settings() {
                                 </div>
                             </div>
                             
-                            <div className={"line2"} style={{ margin: '20px 0' }} />
+                            <div className={"line2"}/>
                             
                             <div>
-                                <p style={{ margin: '0 0 10px 0', fontWeight: 'bold', color: '#3d2318' }}>Fondo:</p>
+                                <p>Fondo:</p>
                                 <div className={"buttons"}>
                                     <button className={"blueButton"} onClick={light}>Claro</button>
                                     <button className={"blueButton"} onClick={dark}>Oscuro</button>
                                 </div>
                             </div>
                             
-                            <div className={"line2"} style={{ margin: '20px 0' }} />
+                            <div className={"line2"}/>
 
                             {/* --- SECCIÓN DE SEGURIDAD --- */}
                             <div>
-                                <p style={{ margin: '0 0 10px 0', fontWeight: 'bold', color: '#3d2318' }}>Seguridad:</p>
+                                <p>Seguridad:</p>
                                 <div className={"buttons"}>
                                     <button className={"blueButton"} onClick={() => setShowChangePass(true)}>
                                         Cambiar contraseña
@@ -198,7 +194,7 @@ function Settings() {
                                 </div>
                             </div>
                             
-                            <div className={"line2"} style={{ margin: '20px 0' }} />
+                            <div className={"line2"}/>
                             
                             <div>
                                 <button onClick={() => { logOut(); nav.push("/"); }} className={"brownButton"}>Cerrar sesión</button>

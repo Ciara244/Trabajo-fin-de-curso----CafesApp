@@ -35,7 +35,7 @@ export default function Header({ user, menu }) {
                 {user?.rol === 'admin' && (
                     <div
                         onClick={() => setMenuAbierto(!menuAbierto)}
-                        style={{ cursor: 'pointer', fontSize: '32px', display: 'flex', alignItems: 'center', color: '#5c4134' }}
+                        id="menuHamburger"
                     >
                         <IonIcon icon={menuAbierto ? closeOutline : menuOutline} />
                     </div>

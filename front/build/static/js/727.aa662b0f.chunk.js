@@ -1,0 +1,3 @@
+/*! For license information please see 727.aa662b0f.chunk.js.LICENSE.txt */
+"use strict";(self.webpackChunkcafesapp_evelyn_ciara=self.webpackChunkcafesapp_evelyn_ciara||[]).push([[727],{7727(e,t,n){n.d(t,{startStatusTap:()=>o});var s=n(1231),a=n(4891),r=n(5325);const o=()=>{const e=window;e.addEventListener("statusTap",()=>{(0,s.k)(()=>{const t=document.elementFromPoint(e.innerWidth/2,e.innerHeight/2);if(!t)return;const n=(0,a.a)(t);n&&new Promise(e=>(0,r.c)(n,e)).then(()=>{(0,s.w)(async()=>{n.style.setProperty("--overflow","hidden"),await(0,a.s)(n,300),n.style.removeProperty("--overflow")})})})})}}}]);
+//# sourceMappingURL=727.aa662b0f.chunk.js.map

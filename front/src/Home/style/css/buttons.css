@@ -9,7 +9,7 @@ button:hover {
 }
 
 .brownButton {
-    width: 40%;
+    width: 50%;
     min-height: 4rem;
     padding: 1rem;
     color: rgb(255, 240, 240);
@@ -73,7 +73,8 @@ input[type="checkbox"]:checked {
     padding: 1rem;
     font-weight: bold;
     font-family: 'txtBold';
-    background-color: rgb(193, 205, 205);
+    color: #112d44;
+    background-color: #c1cdcd;
     border: none;
     border-radius: 100%;
 }

@@ -27,13 +27,27 @@ const CP858 = {
     'á':'\xA0','í':'\xA1','ó':'\xA2','ú':'\xA3','ñ':'\xA4','Ñ':'\xA5',
     'ª':'\xA6','º':'\xA7','¿':'\xA8','¡':'\xAD',
     'Á':'\xB5','Â':'\xB6','À':'\xB7',
-    'Í':'\xD6','€':'\xD5',  // 0xD5 = € en CP858 (la gran diferencia con CP850)
+    'Í':'\xD6','€':'\xD5',
     'Ó':'\xE0','Ú':'\xE9',
 };
 
 function enc(str) {
     if (str == null) return '';
     return String(str).split('').map(c => CP858[c] ?? c).join('');
+}
+
+//formatear fecha
+function formatearDate(fechaUTC) {
+    const fecha = new Date(fechaUTC);
+
+    return fecha.toLocaleString("es-ES", {
+        timeZone: "Atlantic/Canary",
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit"
+    });
 }
 // ──────────────────────────────────────────────────────────────────────────
 
@@ -64,19 +78,20 @@ function print(order) {
                 .join("\n")
             : "";
 
+        const alergico = (order.alergias == true ? "SI" : "NO");
+        const dateTime = formatearDate(order.fecha);
+
         printer
-            // ESC t 19 → comando ESC/POS que activa CP858 en la impresora
-            // Esto sí le dice a la impresora qué tabla usar para leer los bytes
             .raw(Buffer.from([0x1B, 0x74, 0x13]))
             .font("a")
             .align("ct")
-            .text(enc(String(order.fecha)))
+            .text(String(dateTime))
             .text(enc(String(order.colegio)))
             .align("lt")
             .text(enc(`PEDIDO NÚMERO: ${order.id}`))
             .text(enc(`USUARIO ID: #${order.usuario_id}`))
             .text(enc(`NOMBRE: ${order.usuario_nombre}`))
-            .text(enc(`ALERGIA: ${order.alergias}`))
+            .text(enc(`ALERGIA: ${alergico}`))
             .align("ct")
             .text(linea)
             .text(productosStr)
@@ -88,10 +103,10 @@ function print(order) {
     });
 }
 
+
 app.post("/printTicket", (req, res) => {
     const order = req.body;
     print(order);
-<<<<<<< HEAD
     res.json({ ok: true });
 });
 
@@ -99,28 +114,3 @@ const PORT = 3001;
 app.listen(PORT, () => {
     console.log(`Servidor de impresión corriendo en http://localhost:${PORT}`);
 });
-
-
-=======
-    res.json({ok:true});
-})
-
-
-/////////////////////////
-// Para poner en el front
-/*
-async function imprimirTicket(order) {
-    try {
-        await fetch("http://localhost:3000/printTicket", {
-            method: "POST",
-            headers: {"Content-Type":"application/json"},
-            body: JSON.stringify(order)
-        });
-    } catch (error) {
-        console.log("ERROR");
-    };
-};
-
-imprimirTicket(order);
-*/
->>>>>>> ce647397e25a6a5cfafd887170d18cf6e454551e

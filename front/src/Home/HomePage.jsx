@@ -10,6 +10,8 @@
  * Se utiliza IonAlert para mostrar mensajes de error de forma visual y atractiva.
  * El botón de registro redirige a la página de registro para crear una nueva cuenta.
  * La página se conecta a Supabase para verificar las credenciales del usuario y gestionar el estado de inicio de sesión en el contexto.
+ * Se ha implementado bcrypt para hashear las contraseñas en el frontend antes de enviarlas a Supabase, asegurando que las contraseñas se almacenen de forma segura 
+ * en la base de datos.
  */
 
 import React, { useContext, useState } from "react";
@@ -20,6 +22,7 @@ import { UserLogin } from "./js/UserId";
 import { IonAlert } from '@ionic/react';
 import img from "../resources/img/LogoCafe.webp";
 import { supabase } from "../services/supabaseClient";
+import bcrypt from 'bcryptjs';
 
 function HomePage() {
     const nav = useHistory();
@@ -37,52 +40,60 @@ function HomePage() {
             return;
         }
 
-        // 1. Busca en la tabla Usuario (columnas: nombre, pass)
+        // 1. Busca en tabla Usuario solo por nombre
         const { data: dataUsuario } = await supabase
             .from('Usuario')
             .select('*')
             .eq('nombre', id)
-            .eq('pass', pass);
+            .single();
 
-        if (dataUsuario && dataUsuario.length > 0) {
-            // Guarda el usuario en contexto con su rol para controlar funcionalidades
-            login({ ...dataUsuario[0], rol: 'usuario' });
-            nav.push("/tabs/menu");
-            return;
+        if (dataUsuario) {
+            const ok = await bcrypt.compare(pass, dataUsuario.pass);
+            if (ok) {
+                login({ ...dataUsuario, rol: 'usuario' });
+                nav.push("/tabs/menu");
+                return;
+            }
         }
 
-        // 2. Busca en la tabla Trabajador (columnas: nombre_tr, pass_tr)
+        // 2. Busca en tabla Trabajador
         const { data: dataTrabajador } = await supabase
             .from('Trabajador')
             .select('*')
             .eq('nombre_tr', id)
-            .eq('pass_tr', pass);
+            .single();
 
-        if (dataTrabajador && dataTrabajador.length > 0) {
-            // Guarda el trabajador en contexto con su rol
-            login({ ...dataTrabajador[0], rol: 'trabajador' });
-            nav.push("/tabs/menu");
-            return;
+        if (dataTrabajador) {
+            const ok = await bcrypt.compare(pass, dataTrabajador.pass_tr);
+            if (ok) {
+                login({ ...dataTrabajador, rol: 'trabajador' });
+                nav.push("/tabs/menu");
+                return;
+            }
         }
 
-        // 3. Busca en la tabla Administrador (columnas: nombre_ad, pass_ad)
+        // 3. Busca en tabla Administrador
         const { data: dataAdmin } = await supabase
             .from('Administrador')
             .select('*')
             .eq('nombre_ad', id)
-            .eq('pass_ad', pass);
+            .single();
 
-        if (dataAdmin && dataAdmin.length > 0) {
-            // Guarda el admin en contexto con su rol
-            login({ ...dataAdmin[0], rol: 'admin' });
-            nav.push("/tabs/menu");
-            return;
+        if (dataAdmin) {
+            const ok = await bcrypt.compare(pass, dataAdmin.pass_ad);
+            if (ok) {
+                login({ ...dataAdmin, rol: 'admin' });
+                nav.push("/tabs/menu");
+                return;
+            }
         }
 
-        // 4. Si no coincide en ninguna tabla, muestra error
+        // 4. Ninguno coincide
         setAlertMsg("Usuario o contraseña incorrectos.");
         setShowAlert(true);
     }
+
+
 
     return (
         <div className={'inicio'}>
@@ -98,6 +109,10 @@ function HomePage() {
             <TextInput txt="Contraseña" valor="password" id="Password" />
             <button onClick={loadLogin} className={"brownButton"}>INICIAR SESIÓN</button>
             <button onClick={() => nav.push("/register")} className={"brownButton"}>REGISTRARSE</button>
+            <div id="creadoras">
+                <p>Evelyn - evelynsan1805@gmail.com</p>
+                <p>Ciara - martinsanchezciara244@gmail.com</p>
+            </div>
         </div>
     );
 }

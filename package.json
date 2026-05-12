@@ -1,6 +1,14 @@
 {
   "dependencies": {
     "@stripe/react-stripe-js": "^6.3.0",
-    "@stripe/stripe-js": "^9.4.0"
+    "@stripe/stripe-js": "^9.4.0",
+    "escpos": "^3.0.0-alpha.6",
+    "escpos-network": "^3.0.0-alpha.5"
+  },
+  "devDependencies": {
+    "electron": "^42.0.1"
+  },
+  "scripts": {
+    "electron": "electron ./electron/main.js"
   }
 }

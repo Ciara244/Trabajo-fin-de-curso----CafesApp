@@ -28,7 +28,7 @@ import { cartOutline, closeOutline, addOutline, removeOutline } from 'ionicons/i
 
 function Cart() {
     const nav = useHistory();
-    const { user, setPriceUser } = useContext(UserLogin);
+    const { user, setPriceUser, setBasket } = useContext(UserLogin);
 
     // Clave fija para el carrito — se limpia en logOut desde UserId.js
     const CLAVE_CARRITO = "carrito";
@@ -78,6 +78,7 @@ function Cart() {
         setCarrito([]);
         localStorage.removeItem(CLAVE_CARRITO);
         setPriceUser(0);
+        setBasket(0);
     }
 
     // Precio total calculado desde el estado del carrito

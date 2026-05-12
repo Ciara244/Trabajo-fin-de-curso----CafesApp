@@ -174,25 +174,26 @@ ion-list, ion-item{
     display: flex;
     align-items: center;
     justify-content: space-between;
-
-    
 }
 .cuerpo:has(.cardProduct) + .cabecera {
     position: fixed;
     z-index: 100;
 }
 
+#menuHamburger>ion-icon {
+    font-size: 2rem !important;
+}
 .cabecera > * {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 0 0.8rem 0 0.8rem;
+    margin: 0 0.8rem;
 }
-.cabecera ion-icon {
+.cabecera ion-icon{
     font-size: 1.6rem;
     color: #f4e3dc;
 }
-.cabecera>ion-icon:hover{
+.cabecera>ion-icon:hover, #menuHamburger:hover>ion-icon{
     color: #e0b6a5;
     cursor: pointer;
 }
@@ -234,7 +235,15 @@ ion-list, ion-item{
     margin: auto;
 }
 
-
+#formularioMoney {
+    width: 90%;
+}
+#formularioMoney>.input {
+    width: 100%;
+}
+#formularioMoney>.input>p {
+    font-weight: bolder !important;
+}
 /*-------------------------------------- CLASES --------------------------------------*/
 
 .input {
@@ -318,7 +327,8 @@ ion-list, ion-item{
 }
 
 .cardProduct {
-    min-height: 10rem !important;
+    min-height: 11rem !important;
+    flex-grow: 1;
 }
 
 /*------------------- CLASES ESPECIFICAS -------------------*/
@@ -363,14 +373,21 @@ ion-list, ion-item{
     width: 100%;
 }
 
-.box > div:first-child > *:first-child {
-    min-width: 50%;
-    text-align: right;
-    padding-right: 0.5rem;
+.box>div:first-child {
+    flex-direction: column;
+    align-items: center;
 }
-.box > div:first-child > *:last-child {
-    min-width: 50%;
+.box>div:first-child>div {
+    width: 90%;
+    margin-bottom: 0.5rem;
+    display: flex;
+}
+.box>div:first-child>div>* {
     text-align: left;
+    margin-left: 0.5rem;
+}
+.box>div:first-child>div>p {
+    color: #3d2318;
 }
 
 .box > div:first-child, .box > div:last-child {
@@ -448,6 +465,7 @@ ion-list, ion-item{
     align-items: center;
 
     min-width: 40%;
+    height: 3rem !important;
 }
 .buttonsPrice>div>input, .buttonsPrice>div>label {
     accent-color: #6b9696 ;
@@ -625,6 +643,14 @@ ul:has(.allergensDiv), ul:has(.ingredientsDiv), ul:has(div>input[type="radio"]) 
 
 
 /*------------------- ID -------------------*/
+#creadoras {
+    width: 100%;
+}
+#creadoras > p {
+    opacity: 0.6;
+    text-align: center;
+    font-style: italic;
+}
 #cafeBackground {
     border-radius: 100%;
     max-height: 40%;
@@ -927,27 +953,21 @@ ion-card:active:not(.cardOrder), button:active, #addProduct:active {
 /* --- TARJETA DE PRODUCTO (Item.jsx) --- */
 .item-card {
     cursor: pointer;
-    max-width: 900px;
-    margin: 15px auto;
-    border-radius: 12px;
-    background-color: #efceb7;
-    box-shadow: none;
-    padding: 15px;
+    padding: 0.3rem;
     display: flex;
     align-items: center;
 }
 
 .item-img-wrapper {
     flex-shrink: 0;
-    margin-right: 20px;
+    margin-right: 0.5rem;
 }
 
 .item-img {
-    width: 150px;
-    height: 200px;
+    width: 9.5rem;
+    height: 12rem;
     object-fit: cover;
-    border-radius: 12px;
-    border: 3px solid #283737;
+    border: 0.25rem solid #7e6352;
     display: block;
     margin: 0;
 }

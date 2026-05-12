@@ -1,0 +1,1 @@
+{"version":3,"file":"static/js/325.38bbb4dc.chunk.js","mappings":"mJAAO,MAAMA,EACT,iBAAMC,GACFC,QAAQC,KAAK,0BACjB,E","sources":["plugins/printer.web.ts"],"sourcesContent":["export class PrinterWeb {\r\n    async printTicket() {\r\n        console.warn(\"El plugin no esta pa pc\");\r\n    }\r\n}"],"names":["PrinterWeb","printTicket","console","warn"],"sourceRoot":""}

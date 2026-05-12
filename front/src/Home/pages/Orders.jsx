@@ -6,7 +6,6 @@ import { supabase } from "../../services/supabaseClient";
 import { IonHeader, IonToolbar } from "@ionic/react";
 
 /* COMPONENTS */
-import Header from "../components/Header";
 import Loading from "../components/Loading";
 
 // Estados posibles y su orden de flujo
@@ -186,7 +185,6 @@ function Orders() {
            <IonContent className={"contentBackground"}>
                 <div className={'padre'}>
                     {loader ? <Loading /> : null}
-                    <Header user={user} menu={false} />
                            {/* BARRA DE FILTRO EN IONHEADER - fuera del IonContent */}
         {(esTrabajador || esAdmin) && (
                 <IonToolbar>
@@ -306,7 +304,8 @@ function Orders() {
                                         padding: '16px',
                                         marginBottom: '14px',
                                         cursor: 'pointer',
-                                        boxShadow: '0 2px 8px rgba(92,65,52,0.06)'
+                                        boxShadow: '0 2px 8px rgba(92,65,52,0.06)',
+                                        width: '90%'
                                     }}
                                 >
                                     {/* NUMERO DE PEDIDO Y ESTADO */}

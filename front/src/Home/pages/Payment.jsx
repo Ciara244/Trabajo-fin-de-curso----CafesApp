@@ -17,12 +17,14 @@ import { Elements, CardElement, useStripe, useElements } from "@stripe/react-str
 import { supabase } from "../../services/supabaseClient";
 import { IonIcon } from "@ionic/react";
 import { checkmarkOutline, logIn } from 'ionicons/icons';
+import { imprimirAndroid } from "../../plugins/printer.ts";
 
 /* COMPONENTS */
 import Header from "../components/Header";
 import Exit from "../components/Exit";
 import TextInput from "../components/input/Input";
 import RadioInput from "../components/input/Radio";
+import { Capacitor } from "@capacitor/core";
 
 // Cargamos Stripe con la publishable key del .env
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_KEY);
@@ -43,6 +45,11 @@ const cardElementStyle = {
 // Llama al servidor de impresión local con los datos del pedido
 async function imprimirTicket(order) {
     try {
+        //window.electronAPI.printTicket(order); Electron
+        if (Capacitor.getPlatform() === "android") {
+            await imprimirAndroid(order);
+            return;
+        }
         await fetch("http://localhost:3001/printTicket", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -56,6 +63,7 @@ async function imprimirTicket(order) {
 
 // Formulario de pago separado para poder usar los hooks de Stripe
 function FormularioPago({ user, carrito, totalCalculado }) {
+    const { setBasket } = useContext(UserLogin);
     const stripe = useStripe();
     const elements = useElements();
     const nav = useHistory();
@@ -129,6 +137,7 @@ function FormularioPago({ user, carrito, totalCalculado }) {
                 usuario_id: pedidoInsertado.usuario_id,
                 usuario_nombre: user.nombre,
                 colegio: user.institucion || '—',
+                alergias: user.alergias,
                 productos: productos,
                 extras: extras,
                 total: parseFloat(totalCalculado)
@@ -151,6 +160,7 @@ function FormularioPago({ user, carrito, totalCalculado }) {
 
     // Pantalla de éxito tras el pago
     if (exito) {
+        setBasket(0);
         return (
             <div className="payment-success-container">
                 <div className="payment-success-icon">✓</div>
@@ -162,7 +172,7 @@ function FormularioPago({ user, carrito, totalCalculado }) {
     }
 
     return (
-        <form onSubmit={handlePago}>
+        <form onSubmit={handlePago} id="formularioMoney">
 
             {/* RESUMEN DEL PEDIDO */}
             <div className="payment-summary-box">
@@ -201,9 +211,8 @@ function FormularioPago({ user, carrito, totalCalculado }) {
                 <div className="stripe-card-wrapper">
                     <CardElement options={cardElementStyle} />
                 </div>
-                <p className="stripe-test-info">
-                    Prueba con tarjeta: 4242 4242 4242 4242 — cualquier fecha futura — cualquier CVV
-                </p>
+                
+                {/*Para probar, prueba con tarjeta: 4242 4242 4242 4242 — cualquier fecha futura — cualquier CVV*/}
             </div>
 
             {/* Emisor de la tarjeta */}
@@ -219,7 +228,7 @@ function FormularioPago({ user, carrito, totalCalculado }) {
             )}
 
             {/* BOTONES */}
-            <div className="buttonsPrice" style={{ marginTop: '25px' }}>
+            <div className="buttonsPrice" style={{ marginTop: '1rem' }}>
                 <button
                     type="submit"
                     className="aquaButton"

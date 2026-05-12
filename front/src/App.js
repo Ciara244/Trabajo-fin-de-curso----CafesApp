@@ -7,7 +7,6 @@ import { UserLogin } from './Home/js/UserId';
 /* PAGES */
 import HomePage from './Home/HomePage';
 import Register from './Home/pages/Register';
-import Workers from './Home/pages/Workers';
 import Cart from './Home/pages/Cart';
 import Payment from './Home/pages/Payment';
 import Product from './Home/pages/Product';
@@ -35,10 +34,10 @@ function App() {
         <Switch>
           <Route exact path="/" component={HomePage} />
           <Route exact path="/register" component={Register} />
-          <Route exact path="/workers" component={Workers} />
           <Route exact path="/cart" component={Cart} />
           <Route exact path="/payment" component={Payment} />
           <Route exact path="/product" component={Product} />
+          
           <Route exact path="/admin/menu" component={AdminMenu} />
           <Route exact path="/admin/workers" component={AdminWorkers} />
           <Route exact path="/admin/users" component={AdminUsers} />

@@ -17,7 +17,7 @@ export default function Card({ data }) {
 
     return (
         <IonCard 
-            className="item-card" 
+            className="item-card cardProduct" 
             onClick={() => nav.push("/product", { product: data })} 
         >
             {/* 1. SECCIÓN DE LA IMAGEN */}

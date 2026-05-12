@@ -23,7 +23,7 @@ import Header from "../components/Header";
 import Exit from "../components/Exit";
 
 function Product() {
-    const { user } = useContext(UserLogin);
+    const { user, basket, setBasket } = useContext(UserLogin);
     const nav = useHistory();
     const location = useLocation();
 
@@ -133,11 +133,12 @@ function Product() {
             extras: extrasSeleccionados
         };
 
-      const claveCarrito = "carrito";
-const carritoActual = JSON.parse(localStorage.getItem(claveCarrito)) || [];
-carritoActual.push(productoCarrito);
-localStorage.setItem(claveCarrito, JSON.stringify(carritoActual));
+        const claveCarrito = "carrito";
+        const carritoActual = JSON.parse(localStorage.getItem(claveCarrito)) || [];
+        carritoActual.push(productoCarrito);
+        localStorage.setItem(claveCarrito, JSON.stringify(carritoActual));
         setMostrarToast(true);
+        setBasket(basket+1);
         setTimeout(() => setMostrarToast(false), 2500);
     };
 
@@ -256,7 +257,6 @@ localStorage.setItem(claveCarrito, JSON.stringify(carritoActual));
                 </div>
             </IonContent>
 
-            {/* IONFOOTER: La forma oficial de fijar cosas abajo en Ionic */}
             <IonFooter style={{ borderTop: 'none', boxShadow: '0 -4px 15px rgba(0,0,0,0.1)' }}>
                 <div style={{
                     height: '80px',
