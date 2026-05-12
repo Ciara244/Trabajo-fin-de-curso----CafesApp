@@ -78,26 +78,37 @@ function print(order) {
                 .join("\n")
             : "";
 
-        const alergico = (order.alergias == true ? "SI" : "NO");
+        const alergico = (order.alergico ? 
+            order.alergias
+            .map(alergia => enc(`${alergia}`))
+            .join(" ")
+            : "NO");
         const dateTime = formatearDate(order.fecha);
 
         printer
             .raw(Buffer.from([0x1B, 0x74, 0x13]))
             .font("a")
             .align("ct")
+            .raw(Buffer.from([0x1B, 0x45, 0x01]))
             .text(String(dateTime))
             .text(enc(String(order.colegio)))
+            .raw(Buffer.from([0x1B, 0x45, 0x00]))
+
             .align("lt")
             .text(enc(`PEDIDO NÚMERO: ${order.id}`))
             .text(enc(`USUARIO ID: #${order.usuario_id}`))
             .text(enc(`NOMBRE: ${order.usuario_nombre}`))
             .text(enc(`ALERGIA: ${alergico}`))
-            .align("ct")
+
             .text(linea)
             .text(productosStr)
             .text(extrasStr)
             .text(linea)
+
+            .align("ct")
+            .raw(Buffer.from([0x1B, 0x45, 0x01]))
             .text(enc(`TOTAL: ${order.total.toFixed(2)}€`))
+            .raw(Buffer.from([0x1B, 0x45, 0x00]))
             .cut()
             .close();
     });
