@@ -45,8 +45,6 @@ function Product() {
     // Estado para mostrar u ocultar el toast de confirmación al añadir al carrito
     const [mostrarToast, setMostrarToast] = useState(false);
 
-    // FIX: "nav" eliminado de las dependencias para evitar re-ejecuciones
-    // infinitas que provocaban la redirección involuntaria al menú
     useEffect(() => {
         if (!prod) {
             nav.replace("/tabs/menu");
@@ -105,14 +103,30 @@ function Product() {
     );
     const precioTotal = (precioBase + costeExtras).toFixed(2);
 
-    const nombresAlergenos = prod?.alergenos && typeof prod.alergenos === 'object'
-        ? Object.keys(prod.alergenos)
-        : [];
-
     const esPorOpciones =
         prod?.ingredientes &&
         typeof prod.ingredientes === "object" &&
         Object.values(prod.ingredientes).some(v => Array.isArray(v));
+
+    let nombresAlergenos = [];
+
+    if (prod?.alergenos) {
+        if (Array.isArray(prod.alergenos)) {
+            nombresAlergenos = prod.alergenos;
+        } else if (typeof prod.alergenos === 'object') {
+            if (esPorOpciones && opcionSeleccionada && prod.alergenos[opcionSeleccionada]) {
+                nombresAlergenos = prod.alergenos[opcionSeleccionada];
+            } else {
+                const alergenosUnicos = new Set();
+                Object.values(prod.alergenos).forEach(listaDeAlergenos => {
+                    if (Array.isArray(listaDeAlergenos)) {
+                        listaDeAlergenos.forEach(alergeno => alergenosUnicos.add(alergeno));
+                    }
+                });
+                nombresAlergenos = Array.from(alergenosUnicos);
+            }
+        }
+    }
 
     const listaIngredientes = !esPorOpciones
         ? Object.keys(prod?.ingredientes || {})
@@ -123,7 +137,7 @@ function Product() {
             alert("Selecciona una opción");
             return;
         }
-
+        setBasket(basket+1);
         const productoCarrito = {
             id: prod.id,
             nombre: prod.nombre,
@@ -138,7 +152,6 @@ function Product() {
         carritoActual.push(productoCarrito);
         localStorage.setItem(claveCarrito, JSON.stringify(carritoActual));
         setMostrarToast(true);
-        setBasket(basket+1);
         setTimeout(() => setMostrarToast(false), 2500);
     };
 
