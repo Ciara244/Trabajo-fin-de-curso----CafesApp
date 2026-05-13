@@ -24,6 +24,7 @@ import "../style/import.css";
 import TextInput from "../components/input/Input";
 import Selector from "../ionic/Selector";
 import Schedule from "../ionic/Schedule";
+import Allergies from "../ionic/Allergies";
 import { IonAlert } from '@ionic/react';
 
 /* RESOURCES */
@@ -34,7 +35,6 @@ import { supabase } from "../../services/supabaseClient";
 
 /* BCRYPT para hashear contraseñas en el frontend */
 import bcrypt from 'bcryptjs';
-import Allergies from "../ionic/Allergies";
 
 function Register() {
     const nav = useHistory();

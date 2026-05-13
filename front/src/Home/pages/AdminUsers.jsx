@@ -139,9 +139,9 @@ function AdminUsers() {
 
             <IonContent className={"contentBackground"}>
                 <div className={"padre"}>
-                    <div className={"cuerpo"} style={{ maxWidth: '700px', margin: '0 auto', padding: '20px' }}>
+                    <div className={"cuerpo"}>
 
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '20px' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap:'1rem', marginBottom: '1rem', marginTop: '1rem' }}>
                             <button onClick={() => nav.goBack()} style={estiloBotonVolver}>Volver</button>
                             <h2 style={{ margin: 0, color: '#3d2318', fontSize: '1.4rem' }}>Usuarios</h2>
                             <span style={{ marginLeft: 'auto', backgroundColor: '#689d9d', color: '#fff', borderRadius: '20px', padding: '4px 12px', fontSize: '0.85rem', fontWeight: 'bold' }}>
@@ -168,9 +168,9 @@ function AdminUsers() {
                                 style={{
                                     backgroundColor: '#fff',
                                     border: `1px solid ${usuario.suspendido ? '#f5c6c6' : '#e8ddd7'}`,
-                                    borderRadius: '16px', padding: '16px', marginBottom: '12px',
+                                    borderRadius: '16px', padding: '16px', marginBottom: '12px', width: '90%',
                                     cursor: 'pointer', boxShadow: '0 2px 8px rgba(92,65,52,0.06)',
-                                    opacity: usuario.suspendido ? 0.75 : 1
+                                    opacity: usuario.suspendido ? 0.5 : 1
                                 }}
                             >
                                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>

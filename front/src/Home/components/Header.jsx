@@ -31,7 +31,7 @@ export default function Header({ user, menu }) {
                     </div>
                 )}
 
-                {/* HAMBURGUESA ADMIN - Estilos forzados para que NO desaparezca */}
+                {/* HAMBURGUESA ADMIN */}
                 {user?.rol === 'admin' && (
                     <div
                         onClick={() => setMenuAbierto(!menuAbierto)}

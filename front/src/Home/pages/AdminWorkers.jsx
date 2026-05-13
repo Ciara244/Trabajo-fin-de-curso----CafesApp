@@ -12,6 +12,9 @@ import { supabase } from "../../services/supabaseClient";
 import { IonContent, IonPage } from "@ionic/react";
 import "../style/import.css";
 
+/* BCRYPT para hashear contraseñas en el frontend */
+import bcrypt from 'bcryptjs';
+
 // Turnos disponibles para los trabajadores
 const turnos = ["Mañana", "Tarde", "Noche"];
 
@@ -83,9 +86,11 @@ function AdminWorkers() {
             return;
         }
         try {
+            const passHash = await bcrypt.hash(formulario.pass_tr, 10);
+
             const { error } = await supabase.from('Trabajador').insert([{
                 nombre_tr: formulario.nombre_tr,
-                pass_tr: formulario.pass_tr,
+                pass_tr: passHash,
                 turno_tr: formulario.turno_tr
             }]);
             if (error) throw error;
@@ -130,9 +135,10 @@ function AdminWorkers() {
             return;
         }
         try {
+            const passHash = await bcrypt.hash(formulario.pass_tr, 10);
             const { error } = await supabase.from('Trabajador').update({
                 nombre_tr: formulario.nombre_tr,
-                pass_tr: formulario.pass_tr,
+                pass_tr: passHash,
                 turno_tr: formulario.turno_tr
             }).eq('id', trabajadorEditando.id);
             if (error) throw error;

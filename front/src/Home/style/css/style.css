@@ -182,6 +182,7 @@ ion-list, ion-item{
 
 #menuHamburger>ion-icon {
     font-size: 2rem !important;
+    margin-left: auto;
 }
 .cabecera > * {
     display: flex;
@@ -754,7 +755,7 @@ ion-card:active:not(.cardOrder), button:active, #addProduct:active {
 
 /* --- ESTILOS GENERALES Y LAYOUT --- */
 .admin-body {
-    max-width: 700px;
+    width: 100%;
     margin: 0 auto;
     padding: 20px;
 }
