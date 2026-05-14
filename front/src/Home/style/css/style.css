@@ -312,7 +312,7 @@ ion-list, ion-item{
 
 .line {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     width: 100%;
 }
 #rolSelectorRadio>div {
@@ -323,8 +323,8 @@ ion-list, ion-item{
 .line>div {
     width: 70%;
 }
-.line>h2 {
-    width: 20%;
+.line>h5 {
+    margin-right: 1rem;
 }
 
 .cardProduct {
