@@ -229,7 +229,7 @@ function FormularioPago({ user, carrito, totalCalculado }) {
             )}
 
             {/* BOTONES */}
-            <div className="buttonsPrice" style={{ marginTop: '1rem' }}>
+            <div className="buttonsPrice buttonsTogether" style={{ marginTop: '1rem' }}>
                 <button
                     type="submit"
                     className="aquaButton"
@@ -237,7 +237,7 @@ function FormularioPago({ user, carrito, totalCalculado }) {
                     style={{ opacity: (procesando || carrito.length === 0) ? 0.6 : 1 }}
                 >
                     <IonIcon icon={checkmarkOutline} className="payment-btn-icon" />
-                    {procesando ? 'Procesando...' : `Pagar ${totalCalculado} €`}
+                    <p>{procesando ? 'Procesando...' : `Pagar ${totalCalculado} €`}</p>
                 </button>
                 <button
                     type="button"
@@ -246,7 +246,7 @@ function FormularioPago({ user, carrito, totalCalculado }) {
                     disabled={procesando}
                 >
                     <IonIcon icon={logIn} className="payment-btn-icon" />
-                    Regresar
+                    <p>Regresar</p>
                 </button>
             </div>
         </form>
@@ -263,9 +263,9 @@ function Payment() {
     }, 0).toFixed(2);
 
     return (
-        <div className="padre">
+        <div className="padre padreMovible">
             <Header user={user} menu={false} />
-            <div className="cuerpo">
+            <div className="cuerpo cuerpoMovible">
                 <div className="cart">
                     <Exit navi="/cart" />
                     <h1 className="payment-main-title">Pagar</h1>

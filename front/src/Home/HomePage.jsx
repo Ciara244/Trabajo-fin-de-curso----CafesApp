@@ -107,7 +107,7 @@ function HomePage() {
             <img src={img} alt="Café" id="cafeBackground"/>
             <TextInput txt="Id" valor="text" id="Id" />
             <TextInput txt="Contraseña" valor="password" id="Password" />
-            <button onClick={loadLogin} className={"brownButton"}>INICIAR SESIÓN</button>
+            <button onClick={() =>loadLogin()} className={"brownButton"}>INICIAR SESIÓN</button>
             <button onClick={() => nav.push("/register")} className={"brownButton"}>REGISTRARSE</button>
             <div id="creadoras">
                 <p>Evelyn - evelynsan1805@gmail.com</p>

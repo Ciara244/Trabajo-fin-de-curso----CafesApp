@@ -127,6 +127,16 @@ input[type="checkbox"]:checked {
     background-color: #6b9696;
 }
 
+.buttonsTogether button {
+    display: flex;
+    justify-content: center;
+    width: 49%;
+}
+.buttonsTogether button>* {
+    color: #ead8ca !important;
+    margin: 0 0.6rem;
+}
+
 /* SELECTOR DE OPCIONES (PRODUCTO) */
 .btn-opcion-activa {
     background-color: #689d9d !important;

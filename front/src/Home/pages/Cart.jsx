@@ -87,9 +87,9 @@ function Cart() {
     }, 0).toFixed(2);
 
     return (
-        <div className={'padre'}>
+        <div className={'padre padreMovible'}>
             <Header user={user} menu={false} />
-            <div className={"cuerpo"}>
+            <div className={"cuerpo cuerpoMovible"}>
                 <div className={"cart"}>
                     <Exit navi={"/tabs/menu"} />
                     <h1>Pedidos</h1>
@@ -156,7 +156,7 @@ function Cart() {
 
                     <h3>Total: <span id="price">{precioTotal} €</span></h3>
 
-                    <div className={"buttonsPrice"}>
+                    <div className={"buttonsPrice buttonsTogether"}>
                         <button
                             className={"aquaButton"}
                             onClick={() => nav.push("/payment")}

@@ -459,6 +459,8 @@ ion-list, ion-item{
     display: flex;
     align-items: center;
     justify-content: space-evenly;
+
+    margin: 2rem 0;
 }
 .buttonsPrice button {
     display: flex;
